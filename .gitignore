@@ -1,0 +1,57 @@
+# See https://help.github.com/ignore-files/ for more about ignoring files.
+
+# Dependencies and yarn generated stuff
+**/node_modules/
+!.yarn/releases
+!.yarn/releases/**
+!.yarn/plugins
+!.yarn/plugins/**
+!.yarn/custom-plugins/**
+!.yarn/sdks/**
+!.yarn/versions/**
+.yarn/**
+.yarn/build-state.yml
+.pnp.*
+**/*.tgz
+**/*.tar.gz
+
+# Compiled output
+**/.dist/
+**/.temp/
+**/.types/
+**/result
+**/result-*
+**/.prod/
+**/.static/
+**/screenshots/
+**/.rollup.cache/
+
+# Data
+/data/
+/test_data/
+
+# Environment
+**/.env
+**/.env.local
+**/.env.development
+**/.env.test
+**/.env.production
+**/.npmrc
+**/.envrc
+
+# Test coverage
+**/coverage/
+
+# Logs
+**/npm-debug.log*
+**/yarn-debug.log*
+**/yarn-error.log*
+**/lerna-debug.log*
+
+# Editors and IDEs
+**/.idea
+**/.vscode/*
+
+# Misc
+**/.DS_Store
+!/.yarn/releases/

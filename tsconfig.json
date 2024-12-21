@@ -1,0 +1,52 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "*": ["*", "src/*"]
+    },
+    "rootDir": "./",
+    "allowJs": true,
+    "declaration": true,
+    "outDir": ".dist",
+    "declarationMap": true,
+    "module": "esnext",
+    "target": "esnext",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "jsx": "preserve",
+    "checkJs": false,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": false,
+    "esModuleInterop": true,
+    "noUnusedParameters": false,
+    "noUnusedLocals": false,
+    "noEmitOnError": false,
+    "strict": true,
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "skipLibCheck": true,
+    "useUnknownInCatchVariables": false,
+    "strictFunctionTypes": false,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "strictNullChecks": true
+  },
+  "include": ["./src/**/*", "./node_modules/@types/**/*"],
+  "exclude": [
+    ",**/dist",
+    "**/.dist",
+    "**/coverage/**/*",
+    "**/node_modules/**/*",
+    "**/docs/**/*",
+    "**/static/**/*",
+    "**/public/**/*",
+    "**/.temp/",
+    "**/result",
+    "**/result-*",
+    "**/.static/",
+    "**/screenshots/",
+    "**/.rollup.cache/"
+  ]
+}
