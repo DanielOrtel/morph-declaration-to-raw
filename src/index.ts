@@ -1,6 +1,6 @@
-import { reduceDeclarationToPrimitive } from 'reduce-value';
+import { morphDeclarationToRaw } from 'reduce-value';
 
-export { reduceDeclarationToPrimitive } from './reduce-value';
+export { morphDeclarationToRaw } from './reduce-value';
 export {
   getPropertyFromConstructor,
   getPropertyInInheritance,
@@ -9,12 +9,7 @@ export {
 export { externalsToWritableDeclarations } from './write-utils/handle-externals';
 export { writeReducedDeclaration } from './write-utils/writers';
 export { writeExternals, writeImports, writeStatements } from './write-utils/write-externals';
-export {
-  getFunctionDeclaration,
-  getExternalIdentifier,
-  evalExternalIdentifier,
-  evalFunctionDeclaration
-} from './utils';
+export { getFunctionDeclaration, getExternalIdentifier } from './utils';
 export * from './types';
 
-export default reduceDeclarationToPrimitive;
+export default morphDeclarationToRaw;

@@ -4,7 +4,8 @@ import { DefinitionInfo, Identifier, Node, Project, SyntaxKind } from 'ts-morph'
 import { ExternalDefinition, ImportStatement, ReferenceContext } from 'types';
 
 /**
- * Resolves all external definitions in a given node. These can be either imports or variable declarations. Returns a list of all external definitions that can be written directly to file
+ * Resolves all external definitions in a given node. These can be either imports or variable declarations.
+ * Returns a list of all external definitions that can be written directly to file.
  * @param node Node
  * @param project Project
  * @param context ReferenceContext

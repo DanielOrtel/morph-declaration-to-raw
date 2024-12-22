@@ -5,6 +5,10 @@ export function stringBetweenStrings(startStr: string, endStr: string, str: stri
   return str.substring(pos, str.indexOf(endStr, pos));
 }
 
+/**
+ * Extracts the function declaration from a string in morphed value
+ * @param func
+ */
 export function getFunctionDeclaration(func: string): string {
   if (typeof func !== 'string' || !func.startsWith(FUNCTION_START) || !func.endsWith(FUNCTION_END)) {
     throw new Error(
@@ -15,6 +19,10 @@ export function getFunctionDeclaration(func: string): string {
   return stringBetweenStrings(FUNCTION_START, FUNCTION_END, func);
 }
 
+/**
+ * Extracts the external identifier from a string in morphed value
+ * @param func
+ */
 export function getExternalIdentifier(func: string): string {
   if (typeof func !== 'string' || !func.startsWith(IDENT_START) || !func.endsWith(IDENT_END)) {
     throw new Error(
@@ -23,12 +31,4 @@ export function getExternalIdentifier(func: string): string {
   }
 
   return stringBetweenStrings(IDENT_START, IDENT_END, func);
-}
-
-export function evalFunctionDeclaration(func: string): (...args: any[]) => any {
-  return eval(getFunctionDeclaration(func));
-}
-
-export function evalExternalIdentifier(func: string): any {
-  return eval(getExternalIdentifier(func));
 }

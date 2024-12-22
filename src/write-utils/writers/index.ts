@@ -4,6 +4,13 @@ import { getExternalIdentifier, getFunctionDeclaration } from 'utils';
 
 export const MAX_DEPTH = 10;
 
+/**
+ * Utility to write a morphed declaration using the CodeBlockWriter
+ * @param writer
+ * @param obj
+ * @param depth
+ * @param maxDepth
+ */
 export function writeReducedDeclaration(writer: CodeBlockWriter, obj: any, depth = 0, maxDepth = MAX_DEPTH) {
   if (depth > maxDepth) {
     throw new Error(`Object exceeds maximum depth of ${maxDepth}. Write better code please`);
@@ -65,6 +72,11 @@ export function writeReducedDeclaration(writer: CodeBlockWriter, obj: any, depth
   writer.write('}');
 }
 
+/**
+ * Utility to write local statements using the CodeBlockWriter
+ * @param writer
+ * @param localStatements
+ */
 export function writeLocalStatements(writer: CodeBlockWriter, localStatements: LocalStatement[]) {
   localStatements.forEach((statement) => {
     if (statement.type === 'const' || statement.type === 'let' || statement.type === 'var') {

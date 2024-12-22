@@ -3,7 +3,10 @@
 ## Overview
 
 A `ts-morph` utility for transforming a Typescript AST node into a JS structure in memory.
-Useful for modifying or reading specific values from an object in
+Useful for modifying or reading specific values from an object in a Typescript AST.
+
+Originally, I wrote this as a way to generate an api-client, and be able to expose the validation configuration to it
+without exposing the internal api structure.
 
 ## Installation
 
@@ -18,12 +21,7 @@ yarn add -D morph-declaration-to-raw
 ## Usage
 
 ```typescript
-import {
-  reduceDeclarationToPrimitive,
-  writeReducedDeclaration,
-  writeExternals,
-  evalFunctionDeclaration
-} from 'morph-declaration-to-raw';
+import { reduceDeclarationToPrimitive, writeReducedDeclaration, writeExternals } from 'morph-declaration-to-raw';
 
 // context is used for external import declarations, to keep track of what has already been imported
 const context = [];
@@ -40,10 +38,6 @@ const [valueTwo, externalsTwo] = reduceDeclarationToPrimitive(someOtherNode, pro
 console.info(valueOne.propertyOne); // the object is "evaled" into memory
 
 valueOne.propertyTwo = 'new value'; // you can modify before writing it to file
-
-// functions are essentially strings that will be written to the file, but you can access them directly
-// by evaling them:
-const myFunc = evalFunctionDeclaration(valueOne.functionDeclaration);
 
 // merge externals declaration so imports are not duplicated
 const externals = new Set([...externalsOne, ...externalsTwo]);
@@ -68,3 +62,12 @@ sourceFile.addVariableStatement({
   ]
 });
 ```
+
+## Caveats
+- This package still has some limitations, so use with caution.
+- `this` is not supported in every context
+- If a declaration depends on an external import, like a value from `node_modules`, that value will not be morphed,
+but instead added to the externals array. You can then write the externals to the source file with `writeExternals`.
+- Functions are saved as strings and the writer utilities in the package will be able to write them back to file.
+You can eval the functions if you really, really need to, but I would not recommend it. eval is slow, and the functions may
+depend on variables/other functions outside their scope.

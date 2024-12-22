@@ -46,6 +46,13 @@ function getPropInInheritance(
   return property;
 }
 
+/**
+ * Get property from inheritance chain
+ * @param classDeclaration
+ * @param propertyName
+ * @param required
+ * @param isStatic
+ */
 export function getPropertyInInheritance(
   classDeclaration: ClassDeclaration,
   propertyName: string,
@@ -55,6 +62,13 @@ export function getPropertyInInheritance(
   return getPropInInheritance(classDeclaration, propertyName, required, isStatic, false) as PropertyDeclaration | null;
 }
 
+/**
+ * Get method from inheritance chain
+ * @param classDeclaration
+ * @param propertyName
+ * @param required
+ * @param isStatic
+ */
 export function getMethodInInheritance(
   classDeclaration: ClassDeclaration,
   propertyName: string,
@@ -64,6 +78,11 @@ export function getMethodInInheritance(
   return getPropInInheritance(classDeclaration, propertyName, required, isStatic, true) as MethodDeclaration | null;
 }
 
+/**
+ * Get property from constructor
+ * @param classDeclaration
+ * @param propertyName
+ */
 export function getPropertyFromConstructor(classDeclaration: ClassDeclaration, propertyName: string): any | null {
   const constructor = classDeclaration.getConstructors()[0];
   if (!constructor) {

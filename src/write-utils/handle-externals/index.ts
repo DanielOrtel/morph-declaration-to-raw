@@ -2,6 +2,10 @@ import { find, flatMap, groupBy, map, uniq } from 'lodash';
 import { OptionalKind, ImportDeclarationStructure } from 'ts-morph';
 import { ExternalDefinition, ImportStatement, LocalStatement } from 'types';
 
+/**
+ * Converts external definitions to a format that can be written to a file with sourceFile.addImportDeclarations
+ * @param externals ExternalDefinition
+ */
 export function externalsToWritableDeclarations(
   externals: ExternalDefinition
 ): [OptionalKind<ImportDeclarationStructure>[], LocalStatement[]] {

@@ -29,7 +29,17 @@ export type ReducePropertyToPrimitiveOptions = {
   reduceEnums?: boolean;
 };
 
-export function reduceDeclarationToPrimitive<T = any, I extends Node = Node>(
+/**
+ * Reduces a declaration to a raw JS value
+ * @param initialInput
+ * @param project
+ * @param context
+ * @param omit
+ * @param resolveImports
+ * @param reduceEnums
+ * @param ignoreFunctions
+ */
+export function morphDeclarationToRaw<T = any, I extends Node = Node>(
   initialInput: I,
   project: Project,
   context: ReferenceContext,
@@ -248,7 +258,7 @@ export function reduceDeclarationToPrimitive<T = any, I extends Node = Node>(
     const classDeclaration = thisExpression.getFirstAncestorByKind(SyntaxKind.ClassDeclaration) as ClassDeclaration;
     if (!classDeclaration) {
       throw new Error(
-        'ThisKeyword used outside of a class. Currently resolving this is only supported inside class declarations.'
+        'ThisKeyword used outside of a class. Currently resolving "this" is only supported inside class declarations.'
       );
     }
     const propertyAccessExpression = thisExpression.getParentIfKind(
