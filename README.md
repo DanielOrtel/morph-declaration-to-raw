@@ -91,19 +91,19 @@ Gets an external identifier from a morphed string.
 Example usage of some of the utilities.
 
 ```typescript
-import { reduceDeclarationToPrimitive, writeReducedDeclaration, writeExternals } from 'ts-morph-utils';
+import { morphDeclarationToRaw, writeMorphedDeclaration, writeExternals } from 'ts-morph-utils';
 
 // context is used for external import declarations, to keep track of what has already been imported
 const context = [];
 
-const [valueOne, externalsOne] = reduceDeclarationToPrimitive(someNode, project, context, {
+const [valueOne, externalsOne] = morphDeclarationToRaw(someNode, project, context, {
   omit: [keyToOmit], // any object keys you want to omit
   resolveImports: true, // will populate the externalsOne array with import declarations from node_modules
   reduceEnums: true,
   ignoreFunctions: false
 });
 
-const [valueTwo, externalsTwo] = reduceDeclarationToPrimitive(someOtherNode, project, context, {});
+const [valueTwo, externalsTwo] = morphDeclarationToRaw(someOtherNode, project, context);
 
 // the object is "evaled" into memory, so you can just read it's values
 console.info(typeof valueOne.propertyOne === 'number');
@@ -123,13 +123,13 @@ sourceFile.addVariableStatement({
   declarations: [
     {
       name: 'VALUE_ONE',
-      initializer: (writer) => writeReducedDeclaration(writer, valueOne, 0, 10),
+      initializer: (writer) => writeMorphedDeclaration(writer, valueOne, 0, 10),
       type: 'YOUR_TYPE'
     },
     {
       name: 'VALUE_TWO',
       type: 'YOUR_TYPE',
-      initializer: (writer) => writeReducedDeclaration(writer, valueTwo, 0, 6)
+      initializer: (writer) => writeMorphedDeclaration(writer, valueTwo, 0, 6)
     }
   ]
 });
