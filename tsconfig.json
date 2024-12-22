@@ -1,11 +1,10 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
-      "*": ["*", "src/*"]
+      "*": ["src/*"]
     },
-    "rootDir": "./",
-    "allowJs": true,
+    "rootDir": "./src",
     "declaration": true,
     "outDir": ".dist",
     "declarationMap": true,

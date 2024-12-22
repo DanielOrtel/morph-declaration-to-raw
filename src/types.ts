@@ -1,7 +1,5 @@
 export type ReferenceContext = string[];
 
-export interface Reduce
-
 export interface ImportStatement {
   type: 'importStatement';
   originalIdentifier: string;
@@ -23,13 +21,8 @@ export interface LocalStatement {
 
 export type ExternalDefinition = Set<ImportStatement | LocalStatement>;
 
-export const DEFAULT_IMPORTS = new Set<ImportStatement>([
-  {
-    type: 'importStatement',
-    originalIdentifier: 'ValidationSchema',
-    identifierName: 'ValidationSchema',
-    moduleSpecifier: '@mumush-libraries/common',
-    namedImports: ['ValidationSchema'],
-    isTypeOnly: true
-  }
-]);
+export const FUNCTION_START = 'Function[' as const;
+export const FUNCTION_END = ']Function' as const;
+
+export const IDENT_START = 'Ident[' as const;
+export const IDENT_END = ']Ident' as const;

@@ -156,7 +156,7 @@ export function resolveIdentifierValue(
   ]);
 }
 
-// todo: may break for re-exported external imports, ex. export { Resources } from '@mumush-libraries/common';
+// todo: may break for re-exported external imports, ex. export { Foo } from 'node-library';
 export function resolveExternalImport(
   rootObject: Identifier,
   context: ReferenceContext,
