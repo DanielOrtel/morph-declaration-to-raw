@@ -6,7 +6,7 @@ export {
   resolveExternalNodes,
   resolveIdentifierValue
 } from './external-declarations/resolve-external-nodes';
-export { writeReducedDeclaration, writeLocalStatements } from './write-utils/writers';
+export { writeMorphedDeclaration, writeLocalStatements } from './write-utils/writers';
 export { writeExternals, writeImports, writeStatements } from './write-utils/write-externals';
 export { getFunctionDeclaration, getExternalIdentifier } from './utils';
 export * from './types';

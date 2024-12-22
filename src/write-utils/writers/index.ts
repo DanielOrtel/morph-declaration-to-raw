@@ -11,7 +11,7 @@ export const MAX_DEPTH = 10;
  * @param depth
  * @param maxDepth
  */
-export function writeReducedDeclaration(writer: CodeBlockWriter, obj: any, depth = 0, maxDepth = MAX_DEPTH) {
+export function writeMorphedDeclaration(writer: CodeBlockWriter, obj: any, depth = 0, maxDepth = MAX_DEPTH) {
   if (depth > maxDepth) {
     throw new Error(`Object exceeds maximum depth of ${maxDepth}. Write better code please`);
   }
@@ -21,7 +21,7 @@ export function writeReducedDeclaration(writer: CodeBlockWriter, obj: any, depth
     writer.newLine();
     writer.indent(() => {
       obj.forEach((value, index, array) => {
-        writeReducedDeclaration(writer, value, depth + 1, maxDepth);
+        writeMorphedDeclaration(writer, value, depth + 1, maxDepth);
         if (index < array.length - 1) {
           writer.write(',');
         }
@@ -62,7 +62,7 @@ export function writeReducedDeclaration(writer: CodeBlockWriter, obj: any, depth
   writer.indent(() => {
     Object.entries(obj).forEach(([key, value], index, array) => {
       writer.write(`${key}: `);
-      writeReducedDeclaration(writer, value, depth + 1, maxDepth);
+      writeMorphedDeclaration(writer, value, depth + 1, maxDepth);
       if (index < array.length - 1) {
         writer.write(',');
       }
