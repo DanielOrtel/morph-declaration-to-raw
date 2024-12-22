@@ -1,10 +1,27 @@
 {
   "name": "morph-declaration-to-raw",
   "packageManager": "yarn@3.4.0",
+  "author": "Daniel Ortel",
+  "license": "MIT",
   "description": "A ts-morph utility for transforming a Typescript AST node into a JS structure in memory",
-  "type": "module",
+  "keywords": [
+    "typescript",
+    "ts-morph",
+    "ast",
+    "transform",
+    "declaration",
+    "raw"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DanielOrtel/morph-declaration-to-raw.git"
+  },
+  "bugs": {
+    "url": "https://github.com/DanielOrtel/morph-declaration-to-raw/issues"
+  },
   "types": ".dist/index.d.ts",
-  "version": "0.1.0",
+  "type": "module",
+  "version": "0.1.1",
   "sideEffects": false,
   "exports": {
     ".": {
@@ -15,6 +32,9 @@
     ".dist",
     "src"
   ],
+  "engines": {
+    "node": ">=20.18.0"
+  },
   "dependencies": {
     "lodash": "^4.17.21",
     "ts-morph": "^24.0.0",
