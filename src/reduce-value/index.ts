@@ -17,12 +17,12 @@ import {
   Node
 } from 'ts-morph';
 import { ScriptElementKind } from 'typescript';
-import { getMethodInInheritance, getPropertyInInheritance } from 'reduce-value/properties';
-import { resolveExternalImport, resolveExternalNodes } from 'reduce-value/resolve-external-nodes';
+import { getMethodInInheritance, getPropertyInInheritance } from 'class-properties';
+import { resolveExternalImport, resolveExternalNodes } from 'external-declarations/resolve-external-nodes';
 import { IDENT_START, IDENT_END, FUNCTION_START, FUNCTION_END } from 'types';
 import type { ExternalDefinition, ReferenceContext } from 'types';
 
-export type ReducePropertyToPrimitiveOptions = {
+export type MorphDeclarationToRawOptions = {
   ignoreFunctions?: boolean;
   omit?: string[];
   resolveImports?: boolean;
@@ -34,18 +34,21 @@ export type ReducePropertyToPrimitiveOptions = {
  * @param initialInput
  * @param project
  * @param context
- * @param omit
- * @param resolveImports
- * @param reduceEnums
- * @param ignoreFunctions
+ * @param options
  */
 export function morphDeclarationToRaw<T = any, I extends Node = Node>(
   initialInput: I,
   project: Project,
   context: ReferenceContext,
-  { omit, resolveImports, reduceEnums, ignoreFunctions }: ReducePropertyToPrimitiveOptions
+  options: MorphDeclarationToRawOptions = { omit: [], resolveImports: true, reduceEnums: false, ignoreFunctions: false }
 ): [T, ExternalDefinition] {
+  const omit = 'omit' in options ? options.omit : [];
+  const resolveImports = 'resolveImports' in options ? options.resolveImports : true;
+  const reduceEnums = 'reduceEnums' in options ? options.reduceEnums : false;
+  const ignoreFunctions = 'ignoreFunctions' in options ? options.ignoreFunctions : false;
+
   let externalDefinitions: ExternalDefinition = new Set([]);
+
   return [doReduce(initialInput), externalDefinitions];
 
   // todo: more robust types

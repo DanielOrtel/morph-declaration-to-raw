@@ -1,7 +1,7 @@
 import { ImportDeclarationStructure, OptionalKind, SourceFile } from 'ts-morph';
 import { LocalStatement, ExternalDefinition } from 'types';
 import { writeLocalStatements } from 'write-utils/writers';
-import { externalsToWritableDeclarations } from 'write-utils/handle-externals';
+import { externalsToWritableDeclarations } from 'external-declarations/handle-externals';
 
 /**
  * Writes external values received when morphing a node to raw value to a source file

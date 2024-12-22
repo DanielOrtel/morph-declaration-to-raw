@@ -83,6 +83,14 @@ export function resolveExternalNodes(
   }
 }
 
+/**
+ * returns a writable local statement and it's dependencies for a given identifier
+ * @param identifier
+ * @param definition
+ * @param project
+ * @param context
+ * @param useContext
+ */
 export function resolveIdentifierValue(
   identifier: Identifier,
   definition: DefinitionInfo,
@@ -157,7 +165,13 @@ export function resolveIdentifierValue(
   ]);
 }
 
-// todo: may break for re-exported external imports, ex. export { Foo } from 'node-library';
+/**
+ * returns a writable import statement and it's dependencies for a given identifier
+ * may break for re-exported externals, ex. export { Foo } from 'node-library';
+ * @param rootObject
+ * @param context
+ * @param useContext
+ */
 export function resolveExternalImport(
   rootObject: Identifier,
   context: ReferenceContext,
