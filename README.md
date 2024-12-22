@@ -4,7 +4,7 @@
 
 A set of utilities to use with `ts-morph`.
 This package is still in its infancy, so there are some limitations, possible bugs with
-the utilities exposed by the package. Not directly affiliated with `ts-morph`.
+the utilities exposed by the package.a Not directly affiliated with `ts-morph`.
 
 ## Installation
 

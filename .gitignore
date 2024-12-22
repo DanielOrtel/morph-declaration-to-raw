@@ -2,6 +2,11 @@
 
 # Dependencies and yarn generated stuff
 **/node_modules/
+.yarn/**
+.yarn/build-state.yml
+.pnp.*
+**/*.tgz
+**/*.tar.gz
 !.yarn/releases
 !.yarn/releases/**
 !.yarn/plugins
@@ -9,11 +14,6 @@
 !.yarn/custom-plugins/**
 !.yarn/sdks/**
 !.yarn/versions/**
-.yarn/**
-.yarn/build-state.yml
-.pnp.*
-**/*.tgz
-**/*.tar.gz
 
 # Compiled output
 **/.dist/
