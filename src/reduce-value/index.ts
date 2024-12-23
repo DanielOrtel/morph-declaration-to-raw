@@ -1,25 +1,26 @@
-import {
-  Project,
-  SyntaxKind,
-  ObjectLiteralExpression,
-  Identifier,
-  ArrayLiteralExpression,
-  CallExpression,
-  AsExpression,
-  SpreadAssignment,
-  ParenthesizedExpression,
-  PropertyAccessExpression,
-  ClassDeclaration,
-  ThisExpression,
-  PropertyAssignment,
-  FunctionExpression,
-  EnumDeclaration,
-  Node
-} from 'ts-morph';
 import { ScriptElementKind } from 'typescript';
+import {
+  ArrayLiteralExpression,
+  AsExpression,
+  CallExpression,
+  ClassDeclaration,
+  EnumDeclaration,
+  FunctionExpression,
+  Identifier,
+  Node,
+  ObjectLiteralExpression,
+  ParenthesizedExpression,
+  Project,
+  PropertyAccessExpression,
+  PropertyAssignment,
+  ShorthandPropertyAssignment,
+  SpreadAssignment,
+  SyntaxKind,
+  ThisExpression
+} from 'ts-morph';
 import { getMethodInInheritance, getPropertyInInheritance } from 'class-properties';
 import { resolveExternalImport, resolveExternalNodes } from 'external-declarations/resolve-external-nodes';
-import { IDENT_START, IDENT_END, FUNCTION_START, FUNCTION_END } from 'types';
+import { FUNCTION_END, FUNCTION_START, IDENT_END, IDENT_START } from 'types';
 import type { ExternalDefinition, ReferenceContext } from 'types';
 
 export type MorphDeclarationToRawOptions = {
@@ -58,6 +59,9 @@ export function morphDeclarationToRaw<T = any, I extends Node = Node>(
         return resolveIdentifierValue(input);
       case SyntaxKind.StringLiteral:
         return input.getText().slice(1, -1); // Remove quotes
+      case SyntaxKind.NoSubstitutionTemplateLiteral:
+      case SyntaxKind.RegularExpressionLiteral:
+        return input.getLiteralValue();
       case SyntaxKind.NumericLiteral:
         return parseFloat(input.getText());
       case SyntaxKind.TrueKeyword:
@@ -96,21 +100,10 @@ export function morphDeclarationToRaw<T = any, I extends Node = Node>(
         }
         return doReduce(initializer);
       }
+      case SyntaxKind.TypeReference:
+        return;
       default:
         throw new Error(`Unsupported initializer kind: ${input.getKindName()}. For ${input.getText()}`);
-    }
-  }
-
-  function reduceKeyToPrimitive(key: any) {
-    switch (key.getKind()) {
-      case SyntaxKind.Identifier:
-        return key.getText();
-      case SyntaxKind.ComputedPropertyName: {
-        const expression = key.getExpression();
-        return doReduce(expression);
-      }
-      default:
-        throw new Error(`Unsupported ObjectLiteral key: ${key.getKindName()}. For ${key.getText()}`);
     }
   }
 
@@ -123,6 +116,14 @@ export function morphDeclarationToRaw<T = any, I extends Node = Node>(
         // do not include omitted keys
         if (omit?.includes(name)) return;
         result[name] = doReduce(value);
+      }
+      if (prop.getKind() === SyntaxKind.ShorthandPropertyAssignment) {
+        const shorthand = prop as ShorthandPropertyAssignment;
+        const name = shorthand.getNameNode().getText();
+        const value = resolveShorthandProperty(shorthand);
+        // do not include omitted keys
+        if (omit?.includes(name)) return;
+        result[name] = value;
       }
       if (prop.getKind() === SyntaxKind.SpreadAssignment) {
         const spreadAssignment = prop as SpreadAssignment;
@@ -138,6 +139,46 @@ export function morphDeclarationToRaw<T = any, I extends Node = Node>(
     });
     return result;
   }
+
+  function reduceKeyToPrimitive(key: any) {
+    switch (key.getKind()) {
+      case SyntaxKind.Identifier:
+        return key.getText();
+      case SyntaxKind.ComputedPropertyName: {
+        const expression = key.getExpression();
+        return doReduce(expression);
+      }
+      default:
+        throw new Error(`Unsupported ObjectLiteral key: ${key.getKindName()}. For ${key.getText()}`);
+    }
+  }
+
+  function resolveShorthandProperty(shorthand: ShorthandPropertyAssignment): any {
+    const references = shorthand.findReferences();
+    let declaration: Node | undefined;
+
+    if (references.length > 0) {
+      declaration = references[0].getDefinition().getDeclarationNode();
+    }
+
+    if (declaration) {
+      return doReduce(declaration);
+    }
+
+    return null;
+  }
+
+  // todo: figure out some way to handle TemplateExpressions
+  // function reduceTemplateExpression(templateExpression: TemplateExpression): string {
+  //   const head = templateExpression.getHead().getText();
+  //
+  //   const spans = templateExpression.getTemplateSpans().map((span) => {
+  //     const expression = doReduce(span.getExpression());
+  //     const literal = span.getLiteral().getText();
+  //     return `'${expression}'${literal}`;
+  //   });
+  //   return `${head}${spans.join('')}`;
+  // }
 
   function reduceAsExpression(asExpression: AsExpression): any {
     const expression = asExpression.getExpression();
@@ -200,6 +241,8 @@ export function morphDeclarationToRaw<T = any, I extends Node = Node>(
         return identifier.getText();
       case ScriptElementKind.typeElement:
         return null;
+      case ScriptElementKind.memberFunctionElement:
+        return resolveCallExpressionValue(identifier as any, ignoreFunctions);
       default:
         throw new Error(`Unsupported identifier kind: ${definition.getKind()}. For ${identifier.getText()}`);
     }

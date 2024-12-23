@@ -51,8 +51,7 @@ export default tseslint.config(
           vars: 'all',
           args: 'after-used',
           ignoreRestSiblings: true,
-          caughtErrors: 'none',
-          varsIgnorePattern: 'React'
+          caughtErrors: 'none'
         }
       ],
       '@typescript-eslint/no-empty-object-type': [
