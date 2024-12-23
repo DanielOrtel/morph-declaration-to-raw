@@ -274,7 +274,7 @@ function isExternalDefinition(definition: Node | DefinitionInfo) {
   const workingDirectory = process.cwd();
   const modulePath = definition.getSourceFile().getFilePath();
 
-  return !modulePath.includes(workingDirectory);
+  return !modulePath.includes(workingDirectory) || modulePath.includes('node_modules');
 }
 
 function isNativeDefinition(definition: Node | DefinitionInfo) {

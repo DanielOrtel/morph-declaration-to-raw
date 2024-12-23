@@ -1,6 +1,5 @@
 import { babel } from '@rollup/plugin-babel';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
-
 import { nodeExternals } from 'rollup-plugin-node-externals';
 import typescript from '@rollup/plugin-typescript';
 import globImport from 'rollup-plugin-glob-import';
@@ -30,7 +29,7 @@ export default {
             type: 'program',
             // todo: exclude fails for symlinks: https://github.com/LeDDGroup/typescript-transform-paths/issues/325
             factory: (program) =>
-              transformPaths.default(program, { exclude: ['**/@mumush-libraries/**/**', '**/node_modules/**'] })
+              transformPaths.default(program, { exclude: ['**/node_modules/**'] })
           }
         ]
       }

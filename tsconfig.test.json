@@ -1,0 +1,28 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "*": ["src/*", "tests/*"]
+    },
+    "rootDir": "./tests",
+    "declaration": false,
+    "declarationMap": false,
+  },
+  "include": ["./src/**/*", "./tests/**/*", "./node_modules/@types/**/*"],
+  "exclude": [
+    ",**/dist",
+    "**/.dist",
+    "**/coverage/**/*",
+    "**/node_modules/**/*",
+    "**/docs/**/*",
+    "**/static/**/*",
+    "**/public/**/*",
+    "**/.temp/",
+    "**/result",
+    "**/result-*",
+    "**/.static/",
+    "**/screenshots/",
+    "**/.rollup.cache/"
+  ]
+}
